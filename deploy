@@ -1,0 +1,2 @@
+cd goodbye && gcloud functions deploy GoodBye --runtime go111 --trigger-http
+cd ../hello && gcloud functions deploy Hello --runtime go111 --trigger-http
