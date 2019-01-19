@@ -16,6 +16,6 @@ func GoodBye(w http.ResponseWriter, r *http.Request) {
 		"Goodbye BeforeSecond",
 	}
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	w.WriteHeader(http.StatusCreated)
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(data)
 }

@@ -27,8 +27,8 @@ func Hello(w http.ResponseWriter, r *http.Request) {
 	data, _ := ioutil.ReadAll(r.Body)
 	body := Body{}
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	w.WriteHeader(http.StatusCreated)
 	if err := json.Unmarshal(data, &body); err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(Result{
 			500,
 			"Internal Server Error",
@@ -44,6 +44,7 @@ func Hello(w http.ResponseWriter, r *http.Request) {
 		tokenString, err := token.SignedString([]byte(mySigningKey))
 
 		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
 			json.NewEncoder(w).Encode(Result{
 				500,
 				err.Error(),
@@ -51,7 +52,7 @@ func Hello(w http.ResponseWriter, r *http.Request) {
 			})
 			return
 		}
-
+		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(Result{
 			200,
 			body.Message,
